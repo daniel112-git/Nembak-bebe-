@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Bebe ✨ | Temani Langkahku</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        night: {
+                            900: '#060913',
+                            800: '#0b1120',
+                            700: '#111a2e',
+                            600: '#1a2642',
+                        },
+                        gold: {
+                            300: '#ffe89c',
+                            400: '#facf5a',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        cursive: ['"Great Vibes"', 'cursive'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrolling & Animations */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060913;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d97706;
+            border-radius: 3px;
+        }
+
+        /* Glowing text effects */
+        .text-glow-gold {
+            text-shadow: 0 0 12px rgba(250, 207, 90, 0.5), 0 0 25px rgba(245, 158, 11, 0.3);
+        }
+
+        .text-glow-rose {
+            text-shadow: 0 0 12px rgba(244, 114, 182, 0.6), 0 0 25px rgba(225, 29, 72, 0.4);
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s ease;
+        }
+        .glass-card-hover:hover {
+            border-color: rgba(251, 191, 36, 0.5);
+            box-shadow: 0 12px 40px 0 rgba(245, 158, 11, 0.25);
+            transform: translateY(-3px);
+        }
+
+        /* Golden shimmer animation */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #ffe89c 0%, #ffffff 50%, #facf5a 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            animation: shimmer 4s infinite linear;
+        }
+
+        /* Heart Pulse */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.15); }
+            70% { transform: scale(1); }
+        }
+        .animate-heartbeat {
+            animation: heartbeat 2s infinite ease-in-out;
+        }
+
+        /* Evasive button transition */
+        #btn-no {
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Floating effect */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-night-900 text-slate-100 font-sans overflow-x-hidden selection:bg-gold-500 selection:text-night-900 relative min-h-screen">
+
+    <!-- Background Canvas for Stars & Fireworks -->
+    <canvas id="starCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+    <canvas id="fxCanvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <!-- Audio Control Toggle (Ambient Synth Music) -->
+    <div class="fixed top-5 right-5 z-40">
+        <button id="musicToggle" class="glass-card px-4 py-2 rounded-full flex items-center space-x-2 text-xs md:text-sm text-gold-300 hover:text-white transition-all shadow-lg hover:border-gold-400 focus:outline-none">
+            <i id="musicIcon" class="fas fa-music text-gold-400 animate-spin" style="animation-duration: 4s;"></i>
+            <span id="musicText">Putar Suara 🎵</span>
+        </button>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="relative z-10">
+
+        <!-- ================= SECTION 1: HERO (FADE IN INTRO) ================= -->
+        <section id="hero" class="min-h-screen flex flex-col justify-center items-center px-6 py-12 text-center relative overflow-hidden">
+            
+            <!-- Ambient Glow Behind Text -->
+            <div class="absolute w-72 h-72 md:w-96 md:h-96 bg-gold-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+            <div class="absolute w-80 h-80 bg-rose-500/10 rounded-full blur-3xl pointer-events-none -z-10 translate-y-20"></div>
+
+            <div class="max-w-3xl space-y-8 animate-float">
+                <!-- Decorative Crown / Stars Header -->
+                <div class="flex justify-center items-center space-x-3 text-gold-400 text-lg md:text-xl">
+                    <span>✨</span>
+                    <span class="w-12 h-[1px] bg-gradient-to-r from-transparent via-gold-400 to-transparent"></span>
+                    <i class="fas fa-moon text-glow-gold"></i>
+                    <span class="w-12 h-[1px] bg-gradient-to-r from-transparent via-gold-400 to-transparent"></span>
+                    <span>✨</span>
+                </div>
+
+                <!-- Main Fade-In Greeting -->
+                <div class="space-y-4">
+                    <h1 id="fadeText" class="font-serif italic text-3xl md:text-5xl lg:text-6xl text-gold-300 leading-relaxed font-semibold text-glow-gold opacity-0 transition-opacity duration-1000">
+                        "Untuk sayangku cintaku manisku duniaku, pendar foton yang menerangi ruang vakum di hati Koko..."
+                    </h1>
+                    <p id="fadeSubtitle" class="text-sm md:text-base text-slate-400 max-w-md mx-auto opacity-0 transition-opacity duration-1000 delay-500 font-light tracking-wide">
+                        Di antara miliaran galaksi dan entropi semesta yang terus meluas, dua probabilitas acak telah bertabrakan, menciptakan sebuah resonansi kuantum yang kita sebut takdir.
+                    </p>
+                </div>
+
+                <!-- Action Button: Scroll to Section 2 -->
+                <div id="fadeBtn" class="opacity-0 transition-opacity duration-1000 delay-1000 pt-6">
+                    <button id="btnOpenHeart" onclick="scrollToPoem()" class="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden rounded-full font-serif text-lg text-night-900 font-semibold bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:shadow-[0_0_35px_rgba(245,158,11,0.7)] transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0">
+                        <span class="flex items-center space-x-3">
+                            <span>Buka Hati</span>
+                            <i class="fas fa-sparkles text-night-900 group-hover:rotate-12 transition-transform"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Subtle Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-2 text-slate-400 text-xs tracking-widest uppercase">
+                <span class="text-gold-400/80">Gulir Ke Bawah</span>
+                <i class="fas fa-chevron-down animate-bounce text-gold-400"></i>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 2: POEM & JOURNEY ================= -->
+        <section id="poetry" class="min-h-screen flex flex-col justify-center items-center px-6 py-20 relative">
+            
+            <div class="max-w-4xl w-full space-y-16">
+                
+                <!-- Section Header -->
+                <div class="text-center space-y-3">
+                    <p class="font-cursive text-3xl md:text-4xl text-gold-400">Evolusi & Resonansi Rasa</p>
+                    <h2 class="font-serif text-2xl md:text-4xl text-white font-normal">Di Tengah Luasnya Kosmos, Gravitasi Menyatukan Kita</h2>
+                    <div class="w-24 h-[1px] bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto mt-4"></div>
+                </div>
+
+                <!-- Poem Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Card 1 -->
+                    <div class="glass-card glass-card-hover p-6 md:p-8 rounded-2xl space-y-4 relative">
+                        <div class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-400/30 flex items-center justify-center text-gold-400">
+                            <i class="fas fa-compass"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-gold-300">Ekuilibrium Hati</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed font-light">
+                            Sebelummu, duniaku adalah kekacauan dengan entropi tinggi. Kehadiranmu membawa ekuilibrium, meredakan kebisingan menjadi frekuensi gelombang yang menenangkan jiwa.
+                        </p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="glass-card glass-card-hover p-6 md:p-8 rounded-2xl space-y-4 relative">
+                        <div class="w-10 h-10 rounded-full bg-rose-500/10 border border-rose-400/30 flex items-center justify-center text-rose-400">
+                            <i class="fas fa-heart font-thin"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-rose-300">Orbit Estetis</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed font-light">
+                            Seperti hukum tarik-menarik gravitasi, eksistensimu menciptakan kelengkungan ruang-waktu. Di dalam orbitmu, Koko menemukan titik stasioner yang paling aman untuk berpulang.
+                        </p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="glass-card glass-card-hover p-6 md:p-8 rounded-2xl space-y-4 relative">
+                        <div class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-400/30 flex items-center justify-center text-gold-400">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-gold-300">Dilatasi Waktu</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed font-light">
+                            Einstein benar tentang relativitas. Saat bersamamu, detik melambat menjadi keabadian, membuktikan bahwa cinta kita adalah anomali terindah dalam fisika.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Center Featured Poem Box -->
+                <div class="glass-card p-8 md:p-12 rounded-3xl text-center relative overflow-hidden max-w-2xl mx-auto border-gold-500/40">
+                    <div class="absolute -right-10 -bottom-10 text-gold-500/5 text-9xl font-serif select-none pointer-events-none">✨</div>
+                    
+                    <div class="space-y-6 relative z-10">
+                        <i class="fas fa-quote-left text-gold-400/50 text-2xl"></i>
+                        <p class="font-serif italic text-lg md:text-2xl text-slate-200 leading-relaxed">
+                            "Di bawah konstelasi bimasakti yang memendarkan foton jutaan tahun cahaya,<br>
+                            Kutemukan konstanta yang paling absolut di matamu yang tenang.<br>
+                            Bukan tentang probabilitas variabel yang selalu berganti,<br>
+                            Tapi tentang <span class="text-gold-300 font-semibold">quantum entanglement</span> kita;<br>
+                            Bahwa jiwaku dan jiwamu akan terus terhubung tanpa dibatasi dimensi."
+                        </p>
+                        <p class="font-cursive text-2xl text-gold-400 pt-2">— Untuk Bebe tersayang</p>
+                    </div>
+                </div>
+
+                <!-- ================= SECTION 3: THE PROPOSAL QUESTION ================= -->
+                <div id="proposal-box" class="glass-card p-8 md:p-14 rounded-3xl text-center space-y-8 relative border-2 border-gold-400/40 shadow-[0_0_50px_rgba(245,158,11,0.15)]">
+                    
+                    <div class="space-y-3">
+                        <span class="inline-block px-4 py-1 rounded-full bg-gold-500/10 border border-gold-400/30 text-gold-300 text-xs tracking-wider uppercase font-semibold">
+                            Hipotesis Masa Depan
+                        </span>
+                        <h3 class="font-serif text-2xl md:text-4xl text-white font-semibold leading-snug">
+                            Maukah kamu menjadi konstanta absolut dalam setiap persamaan hidupku?
+                        </h3>
+                        <p class="text-sm md:text-base text-slate-300 font-light max-w-md mx-auto">
+                            Menyatukan dua orbit kita, melawan entropi semesta bersama, dan membentuk ikatan kovalen yang tak akan pernah terpisahkan...
+                        </p>
+                    </div>
+
+                    <!-- Interactive Buttons Container -->
+                    <div class="relative min-h-[140px] flex items-center justify-center">
+                        <div id="button-area" class="relative w-full max-w-md h-28 flex items-center justify-center space-x-6 md:space-x-10">
+                            
+                            <!-- 'MAU' Button -->
+                            <button id="btn-yes" onclick="handleYesClick()" class="z-20 px-8 py-4 rounded-full font-serif text-lg font-bold bg-gradient-to-r from-rose-500 via-pink-500 to-gold-400 text-white shadow-[0_0_25px_rgba(244,114,182,0.6)] hover:shadow-[0_0_35px_rgba(244,114,182,0.9)] transform hover:scale-105 active:scale-95 transition-all duration-300 flex items-center space-x-3 cursor-pointer">
+                                <span>Mau 💖</span>
+                                <i class="fas fa-heart text-white animate-pulse"></i>
+                            </button>
+
+                            <!-- 'NGGAK' Button (Evasive / Dodging) -->
+                            <button id="btn-no" class="z-20 px-8 py-4 rounded-full font-serif text-lg font-medium bg-slate-800/80 border border-slate-600 text-slate-300 shadow-md hover:bg-slate-700 transition-none cursor-pointer flex items-center space-x-2">
+                                <span>Nggak 🙈</span>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <!-- Funny evasion tooltip / message -->
+                    <p id="dodgeHint" class="text-xs text-gold-400/80 italic min-h-[20px] transition-all">
+                        (Ssst... Tombol "Nggak" agak pemalu dan suka lari 😜)
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 py-8 text-center text-xs text-slate-500 border-t border-slate-800/50">
+        <p>Dibuat dengan segenap cinta oleh <span class="text-gold-400 font-serif">Koko</span> untuk <span class="text-rose-400 font-serif">Bebe</span> ✨</p>
+    </footer>
+
+
+    <!-- ================= CELEBRATION MODAL POP-UP ================= -->
+    <div id="loveModal" class="fixed inset-0 z-50 flex items-center justify-center px-4 bg-night-900/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-500">
+        <div id="modalContent" class="glass-card max-w-lg w-full p-8 md:p-10 rounded-3xl text-center space-y-6 border-2 border-gold-400 transform scale-90 transition-transform duration-500 shadow-[0_0_60px_rgba(250,207,90,0.3)] relative overflow-hidden">
+            
+            <!-- Shimmering Background Glow -->
+            <div class="absolute -top-24 -left-24 w-48 h-48 bg-rose-500/20 rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-gold-500/20 rounded-full blur-2xl"></div>
+
+            <div class="relative z-10 space-y-4">
+                <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-rose-500 to-gold-400 flex items-center justify-center shadow-lg animate-heartbeat">
+                    <i class="fas fa-heart text-4xl text-white"></i>
+                </div>
+
+                <h2 class="font-cursive text-4xl md:text-5xl text-gold-300 text-glow-gold pt-2">
+                    Kepastian 100%, I love you, Bebe ❤️
+                </h2>
+
+                <p class="font-serif text-lg md:text-xl text-slate-200 leading-relaxed">
+                    Terima kasih telah meruntuhkan semua variabel keraguan dan menjadikan teori ini sebuah kepastian mutlak. Di bawah hukum alam semesta, kamu adalah anomali terindah yang pernah kutemukan.
+                </p>
+
+                <div class="p-4 rounded-xl bg-slate-900/60 border border-gold-500/20 text-xs md:text-sm text-gold-300/90 italic">
+                    "Aku berjanji akan menjadi medan magnet yang melindungimu, menyelaraskan frekuensi kita, dan mencintaimu di setiap fase rotasi bumi mengelilingi matahari."
+                </div>
+
+                <div class="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
+                    <button onclick="sendWhatsApp()" class="px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm transition-all shadow-lg flex items-center justify-center space-x-2">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                        <span>Kabarkan ke Koko 📲</span>
+                    </button>
+                    
+                    <button onclick="closeModal()" class="px-6 py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-sm transition-all border border-slate-700">
+                        Simpan Kenangan Ini ✨
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        /* ----------------------------------------------------
+         * 1. CONFIGURATION & STATE
+         * ---------------------------------------------------- */
+        const partnerName = "Bebe";
+        const myName = "Koko";
+
+        /* ----------------------------------------------------
+         * 2. INITIALIZATION ON LOAD
+         * ---------------------------------------------------- */
+        window.addEventListener('load', () => {
+            // Trigger Fade-In Text Animations sequentially
+            setTimeout(() => {
+                document.getElementById('fadeText').classList.remove('opacity-0');
+            }, 300);
+
+            setTimeout(() => {
+                document.getElementById('fadeSubtitle').classList.remove('opacity-0');
+            }, 1000);
+
+            setTimeout(() => {
+                document.getElementById('fadeBtn').classList.remove('opacity-0');
+            }, 1800);
+
+            // Init Canvas Effects
+            initStarfield();
+            initFXCanvas();
+            initEvasiveButton();
+        });
+
+        /* ----------------------------------------------------
+         * 3. NAVIGATION & SCROLLING
+         * ---------------------------------------------------- */
+        function scrollToPoem() {
+            const poetrySec = document.getElementById('poetry');
+            poetrySec.scrollIntoView({ behavior: 'smooth' });
+            
+            // Try enabling music if not played yet
+            if (!audioContext) {
+                toggleMusic();
+            }
+        }
+
+        /* ----------------------------------------------------
+         * 4. STARRY NIGHT CANVAS BACKGROUND
+         * ---------------------------------------------------- */
+        let starCanvas, ctx;
+        let stars = [];
+        let shootingStars = [];
+
+        function initStarfield() {
+            starCanvas = document.getElementById('starCanvas');
+            ctx = starCanvas.getContext('2d');
+            
+            resizeStarCanvas();
+            window.addEventListener('resize', resizeStarCanvas);
+
+            // Create Stars
+            const starCount = Math.floor((window.innerWidth * window.innerHeight) / 3000);
+            stars = [];
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: Math.random() * starCanvas.width,
+                    y: Math.random() * starCanvas.height,
+                    radius: Math.random() * 1.5 + 0.2,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.015 + 0.005,
+                    color: Math.random() > 0.8 ? '#ffe89c' : (Math.random() > 0.6 ? '#93c5fd' : '#ffffff')
+                });
+            }
+
+            // Start Animation Loop
+            animateStars();
+        }
+
+        function resizeStarCanvas() {
+            starCanvas.width = window.innerWidth;
+            starCanvas.height = window.innerHeight;
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+
+            // Draw Stars
+            stars.forEach(star => {
+                star.alpha += star.speed;
+                if (star.alpha > 1 || star.alpha < 0.2) {
+                    star.speed = -star.speed;
+                }
+
+                ctx.save();
+                ctx.globalAlpha = Math.abs(star.alpha);
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = star.color;
+                ctx.shadowBlur = star.radius * 4;
+                ctx.shadowColor = star.color;
+                ctx.fill();
+                ctx.restore();
+            });
+
+            // Random Shooting Star
+            if (Math.random() < 0.015 && shootingStars.length < 3) {
+                shootingStars.push({
+                    x: Math.random() * starCanvas.width,
+                    y: Math.random() * (starCanvas.height / 2),
+                    length: Math.random() * 80 + 40,
+                    speed: Math.random() * 10 + 6,
+                    angle: Math.PI / 4,
+                    alpha: 1
+                });
+            }
+
+            // Draw & Update Shooting Stars
+            for (let i = shootingStars.length - 1; i >= 0; i--) {
+                const ss = shootingStars[i];
+                const endX = ss.x + Math.cos(ss.angle) * ss.length;
+                const endY = ss.y + Math.sin(ss.angle) * ss.length;
+
+                const grad = ctx.createLinearGradient(ss.x, ss.y, endX, endY);
+                grad.addColorStop(0, 'rgba(255, 232, 156, 1)');
+                grad.addColorStop(1, 'rgba(255, 232, 156, 0)');
+
+                ctx.save();
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(ss.x, ss.y);
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+                ctx.restore();
+
+                ss.x += Math.cos(ss.angle) * ss.speed;
+                ss.y += Math.sin(ss.angle) * ss.speed;
+                ss.alpha -= 0.015;
+
+                if (ss.alpha <= 0 || ss.x > starCanvas.width || ss.y > starCanvas.height) {
+                    shootingStars.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animateStars);
+        }
+
+        /* ----------------------------------------------------
+         * 5. EVASIVE 'NGGAK' BUTTON LOGIC
+         * ---------------------------------------------------- */
+        const dodgePhrases = [
+            "Eits, nggak bisa ditekuk! 😜",
+            "Coba tebak ke mana tombol ini lari~",
+            "Tombol ini menolak diklik! 🙈",
+            "Pilih 'Mau' aja deh, Bebe 🥰",
+            "Yakin mau pencet yang ini? 🥺",
+            "Ups! Meleset lagi 🚀"
+        ];
+        let phraseIndex = 0;
+
+        function initEvasiveButton() {
+            const btnNo = document.getElementById('btn-no');
+            const buttonArea = document.getElementById('button-area');
+            const dodgeHint = document.getElementById('dodgeHint');
+
+            const evade = (e) => {
+                if (e) e.preventDefault();
+                
+                // Get area bounds
+                const areaRect = buttonArea.getBoundingClientRect();
+                const btnRect = btnNo.getBoundingClientRect();
+
+                // Calculate max safe offset inside button area or viewport
+                const maxX = (areaRect.width / 2) - 40;
+                const maxY = 60;
+
+                // Random new position offset
+                const randomX = (Math.random() * maxX * 2) - maxX;
+                const randomY = (Math.random() * maxY * 2) - maxY;
+
+                // Apply style
+                btnNo.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+                // Update text hint
+                dodgeHint.innerText = dodgePhrases[phraseIndex % dodgePhrases.length];
+                dodgeHint.classList.add('text-gold-300');
+                phraseIndex++;
+            };
+
+            // Trigger on desktop mouse hover & mobile touch
+            btnNo.addEventListener('mouseenter', evade);
+            btnNo.addEventListener('touchstart', evade, { passive: false });
+            btnNo.addEventListener('click', evade);
+        }
+
+        /* ----------------------------------------------------
+         * 6. FIREWORKS & HEART RAIN ON 'MAU' CLICK
+         * ---------------------------------------------------- */
+        let fxCanvas, fxCtx;
+        let particles = [];
+        let isCelebrating = false;
+
+        function initFXCanvas() {
+            fxCanvas = document.getElementById('fxCanvas');
+            fxCtx = fxCanvas.getContext('2d');
+            resizeFXCanvas();
+            window.addEventListener('resize', resizeFXCanvas);
+        }
+
+        function resizeFXCanvas() {
+            fxCanvas.width = window.innerWidth;
+            fxCanvas.height = window.innerHeight;
+        }
+
+        function handleYesClick() {
+            isCelebrating = true;
+            
+            // Play upbeat chime sound
+            playCelebrationSound();
+
+            // Spawn Particles
+            spawnHeartsAndFireworks();
+
+            // Show Modal after small delay
+            setTimeout(() => {
+                const modal = document.getElementById('loveModal');
+                const modalContent = document.getElementById('modalContent');
+                
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modalContent.classList.remove('scale-90');
+                modalContent.classList.add('scale-100');
+            }, 400);
+        }
+
+        function spawnHeartsAndFireworks() {
+            particles = [];
+            
+            // Generate Hearts Rain & Star Fireworks
+            for (let i = 0; i < 150; i++) {
+                particles.push({
+                    x: Math.random() * fxCanvas.width,
+                    y: Math.random() * fxCanvas.height - fxCanvas.height,
+                    size: Math.random() * 18 + 10,
+                    speedY: Math.random() * 3 + 2,
+                    speedX: (Math.random() - 0.5) * 2,
+                    rotation: Math.random() * 360,
+                    rotSpeed: (Math.random() - 0.5) * 4,
+                    color: ['#f472b6', '#fbbf24', '#f59e0b', '#ec4899', '#ffffff'][Math.floor(Math.random() * 5)],
+                    type: Math.random() > 0.4 ? 'heart' : 'sparkle',
+                    opacity: 1
+                });
+            }
+
+            requestAnimationFrame(animateFX);
+        }
+
+        function animateFX() {
+            if (!isCelebrating && particles.length === 0) return;
+
+            fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.y += p.speedY;
+                p.x += p.speedX;
+                p.rotation += p.rotSpeed;
+
+                if (p.y > fxCanvas.height) {
+                    p.y = -20;
+                    p.x = Math.random() * fxCanvas.width;
+                }
+
+                fxCtx.save();
+                fxCtx.translate(p.x, p.y);
+                fxCtx.rotate((p.rotation * Math.PI) / 180);
+                fxCtx.fillStyle = p.color;
+                fxCtx.shadowBlur = 10;
+                fxCtx.shadowColor = p.color;
+
+                if (p.type === 'heart') {
+                    // Draw Heart Shape
+                    drawHeart(fxCtx, 0, 0, p.size);
+                } else {
+                    // Draw Star/Sparkle
+                    drawStar(fxCtx, 0, 0, p.size / 2);
+                }
+
+                fxCtx.restore();
+            }
+
+            requestAnimationFrame(animateFX);
+        }
+
+        function drawHeart(ctx, x, y, size) {
+            ctx.beginPath();
+            const topCurveHeight = size * 0.3;
+            ctx.moveTo(x, y + topCurveHeight);
+            ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
+            ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + size, x, y + size);
+            ctx.bezierCurveTo(x, y + size, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
+            ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function drawStar(ctx, cx, cy, r) {
+            ctx.beginPath();
+            for (let i = 0; i < 5; i++) {
+                ctx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * r + cx, -Math.sin((18 + i * 72) * Math.PI / 180) * r + cy);
+                ctx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * (r/2) + cx, -Math.sin((54 + i * 72) * Math.PI / 180) * (r/2) + cy);
+            }
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('loveModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-90');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function sendWhatsApp() {
+            const message = encodeURIComponent(`Halo Koko! Aku udah buka websitenya dan jawab MAU! Aku bersedia jadi konstanta absolut dalam persamaan hidupmu. I love you too! ❤️✨`);
+            window.open(`https://wa.me/?text=${message}`, '_blank');
+        }
+
+        /* ----------------------------------------------------
+         * 7. WEB AUDIO API - ROMANTIC AMBIENT SYNTH
+         * ---------------------------------------------------- */
+        let audioContext = null;
+        let isMusicPlaying = false;
+        let masterGain = null;
+        let ambientOsc = null;
+
+        function toggleMusic() {
+            if (!audioContext) {
+                initAudio();
+            }
+
+            if (isMusicPlaying) {
+                masterGain.gain.setTargetAtTime(0, audioContext.currentTime, 0.5);
+                document.getElementById('musicText').innerText = "Putar Suara 🎵";
+                document.getElementById('musicIcon').classList.remove('fa-volume-up');
+                document.getElementById('musicIcon').classList.add('fa-music');
+                isMusicPlaying = false;
+            } else {
+                audioContext.resume();
+                masterGain.gain.setTargetAtTime(0.15, audioContext.currentTime, 0.5);
+                document.getElementById('musicText').innerText = "Musik Ditingkatkan 🎶";
+                document.getElementById('musicIcon').classList.remove('fa-music');
+                document.getElementById('musicIcon').classList.add('fa-volume-up');
+                isMusicPlaying = true;
+            }
+        }
+
+        function initAudio() {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            audioContext = new AudioCtx();
+
+            masterGain = audioContext.createGain();
+            masterGain.gain.value = 0;
+            masterGain.connect(audioContext.destination);
+
+            // Create gentle warm chords synth pad (Fmaj7 / Cmaj7 atmospheric loop)
+            const freqs = [174.61, 220.00, 261.63, 329.63]; // F3, A3, C4, E4
+            freqs.forEach(freq => {
+                const osc = audioContext.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+
+                const oscGain = audioContext.createGain();
+                oscGain.gain.value = 0.25;
+
+                // Subtle LFO for ambient breathing effect
+                const lfo = audioContext.createOscillator();
+                lfo.frequency.value = 0.2 + Math.random() * 0.1;
+                const lfoGain = audioContext.createGain();
+                lfoGain.gain.value = 0.05;
+
+                lfo.connect(lfoGain);
+                lfoGain.connect(osc.frequency);
+                
+                osc.connect(oscGain);
+                oscGain.connect(masterGain);
+
+                osc.start();
+                lfo.start();
+            });
+        }
+
+        function playCelebrationSound() {
+            if (!audioContext) initAudio();
+            audioContext.resume();
+
+            // Play sweet ascending chime chord
+            const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5, E5, G5, C6, E6
+            notes.forEach((freq, idx) => {
+                setTimeout(() => {
+                    const osc = audioContext.createOscillator();
+                    const gain = audioContext.createGain();
+
+                    osc.type = 'triangle';
+                    osc.frequency.value = freq;
+
+                    gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 1.2);
+
+                    osc.connect(gain);
+                    gain.connect(audioContext.destination);
+
+                    osc.start();
+                    osc.stop(audioContext.currentTime + 1.2);
+                }, idx * 120);
+            });
+        }
+
+        document.getElementById('musicToggle').addEventListener('click', toggleMusic);
+    </script>
+</body>
+</html>
